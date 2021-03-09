@@ -33,7 +33,7 @@ pipeline {
                     }
                 }
                 sh '''
-                    ./mvnw -B clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true \
+                    ./mvnw -B package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true \
                             -Dquarkus.container-image.username=${QUAY_CREDS_USR} \
                             -Dquarkus.container-image.password=${QUAY_CREDS_PSW} \
                 '''
@@ -50,7 +50,9 @@ pipeline {
                 SSH_CREDS = credentials('jenkins.in.relation.to')
             }
             steps {
-                sh 'ssh -vvvvvv -i "${SSH_CREDS}" ${SSH_CREDS_USR}@in.relation.to echo foo'
+                sshagent(['jenkins.in.relation.to']) {
+                    sh 'ssh -vvvvvv -i "${SSH_CREDS}" ${SSH_CREDS_USR}@in.relation.to echo foo'
+                }
             }
         }
     }
