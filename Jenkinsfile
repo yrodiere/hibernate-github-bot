@@ -43,14 +43,14 @@ pipeline {
             when {
                 beforeAgent true
                 not { changeRequest() }
-                branch 'main'
+                branch 'build'
             }
             // Bots are hosted on the same machine as in.relation.to
             environment {
                 SSH_CREDS = credentials('jenkins.in.relation.to')
             }
             steps {
-                sh 'ssh -i "${SSH_CREDS}" ${SSH_CREDS_USR}@in.relation.to echo foo'
+                sh 'ssh -vvvvvv -i "${SSH_CREDS}" ${SSH_CREDS_USR}@in.relation.to echo foo'
             }
         }
     }
