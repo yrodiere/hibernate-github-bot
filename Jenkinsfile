@@ -33,7 +33,7 @@ pipeline {
                     }
                 }
                 sh '''
-                    ./mvnw -B package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true \
+                    ./mvnw -B clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true \
                             -Dquarkus.container-image.username=${QUAY_CREDS_USR} \
                             -Dquarkus.container-image.password=${QUAY_CREDS_PSW} \
                 '''
